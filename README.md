@@ -1,6 +1,6 @@
 # SAGMA
 
-The source code of Paper [SAGMA: Secure Aggregation Grouped by Multiple Attributes](https://dl.acm.org/doi/10.1145/3318464.3380569) from *SIGMOD ’20*
+*（Unofficial）*The source code of Paper [SAGMA: Secure Aggregation Grouped by Multiple Attributes](https://dl.acm.org/doi/10.1145/3318464.3380569) from *SIGMOD ’20*
 
 
 
@@ -12,3 +12,9 @@ The source code of Paper [SAGMA: Secure Aggregation Grouped by Multiple Attribut
 - 2022/11/16: Simulation: Encoding and then encrypting the bucketized table.
 - 2022/11/17: Building buckets with row index.
 
+## Getting Started
+
+### Environment
+
+- `JDK == 1.8`
+- `JPBC == 2.0.0`
