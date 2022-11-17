@@ -9,5 +9,6 @@ The source code of Paper [SAGMA: Secure Aggregation Grouped by Multiple Attribut
 ## Log
 
 - 2022/10/19: BGN SHE scheme tests successfully.
-- 2022/11/16: Simulation: Encoding and then encrypting the bucketized table tests successfully.
+- 2022/11/16: Simulation: Encoding and then encrypting the bucketized table.
+- 2022/11/17: Building buckets with row index.
 

@@ -5,6 +5,7 @@ import it.unisa.dia.gas.jpbc.Element;
 import java.math.BigInteger;
 import test.Entry;
 import test.PostEntry;
+import util.Bucket;
 import util.Bucketize;
 public class Client {
 	
@@ -36,7 +37,16 @@ public class Client {
 		
 		PostEntry []postT = new PostEntry[T.length];
 		Bucketize bt = new Bucketize(2);
-		postT = bt.buildBucket(T);
+		
+		System.out.println("Building buckets...\n");
+		Bucket []resBuckets = bt.buildBuckets(T);
+		System.out.println(" | " + "bucket" + " | " + "rows" + " | ");
+		for(int i=0;i<resBuckets.length;i++) {
+			resBuckets[i].print();
+		}
+		
+		System.out.println("\n encoding table...\n");
+		postT = bt.encodeTable(T);
 		System.out.println(" | " + "id" + " | " + "salary" + " | " + "gender" + " | " + "name" + " | " + "dept" + " | ");
 		for(int i=0;i<postT.length;i++) {
 			postT[i].print();
@@ -49,7 +59,8 @@ public class Client {
 			c = BGN.encrypt(str2int(postT[i].getGdd()), pubkey);
 			postT[i].setGdd(c.hashCode());
 		}
-		System.out.println("after computing encrypted tabled...");
+		System.out.println("\n after computing encrypted table...\n");
+		System.out.println(" | " + "id" + " | " + "salary" + " | " + "gender" + " | " + "name" + " | " + "dept" + " | ");
 		for(int i=0;i<postT.length;i++) {
 			postT[i].print();
 		}
