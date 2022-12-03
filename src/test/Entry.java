@@ -55,7 +55,7 @@ public class Entry {
 	}
 	
 	public void print() {
-		System.out.println(id + " | " + salary + " | " + name + " | " + gender + " | " + dept);
+		System.out.println(" | " + id + " | " + salary + " | " + gender + " | " + name + " | " + dept + " | ");
 	}
 	
 	public static void main(String[] args) {
