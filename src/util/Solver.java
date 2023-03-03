@@ -17,10 +17,10 @@ public class Solver {
 		this.b = b;
 		this.n = num;
 		x = new BigInteger[num];
-		printA();
+		//printA();
 		Elimination();
 		Back();
-		printAns();
+		//printAns();
 		Determinant();
 	}
 	
@@ -45,7 +45,9 @@ public class Solver {
 			System.out.println(x[i]);
 		}
 	}
-	
+	public BigInteger[] getAns() {
+		return x;
+	}
 	private void printA() {
 		System.out.println("Ôö¹ã¾ØÕóÎª");
 		for(int i=0;i<n;i++) {
@@ -68,7 +70,7 @@ public class Solver {
 		}
 		if(n1 != k) {
 			swapRow++;
-			System.out.println("k=" + k + ", swap row is" + k + "and" + n1);
+			//System.out.println("k=" + k + ", swap row is" + k + "and" + n1);
 			for(int j=k;j<n;j++) {
 				BigInteger temp = a[k][j];
 				a[k][j] = a[n1][j];
@@ -77,8 +79,8 @@ public class Solver {
 			BigInteger temp2 = b[k];
 			b[k] = b[n1];
 			b[n1] = temp2;
-			System.out.println("after swap");
-			printA();
+			//System.out.println("after swap");
+			//printA();
 		}		
 	}
 	
@@ -93,8 +95,8 @@ public class Solver {
 				}
 				b[i] = b[i].subtract(l.multiply(b[k])); // - l * b[k];
 			}
-			System.out.println("after k-th elimination: ");
-			printA();
+			//System.out.println("after k-th elimination: ");
+			//printA();
 		}
 	}
 	
@@ -130,6 +132,6 @@ public class Solver {
 		BigInteger base = new BigInteger("-1");
 		//double tp = Math.pow(-1.0,  n3);
 		dm = dm.multiply(base.pow(n3)); // * Math.pow(-1.0,  n3);
-		System.out.println("det(A) = " + dm);
+		//System.out.println("det(A) = " + dm);
 	}
 }

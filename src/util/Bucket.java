@@ -10,6 +10,7 @@ public class Bucket {
 	private String bucketMark;
 	private ArrayList<Integer>rowsArrayList = new ArrayList<Integer>();
 	private int idx;
+	private int count = 0;
 	
 	public Bucket(String mark) {
 		// TODO 自动生成的构造函数存根
@@ -19,7 +20,12 @@ public class Bucket {
 	}
 	
 	public void addRow(int rowId) {
+		count++;
 		rowsArrayList.add(rowId);
+	}
+	
+	public int getCount() {
+		return count;
 	}
 	
 	public String getMark() {
@@ -30,8 +36,13 @@ public class Bucket {
 		return idx;
 	}
 	
+	public ArrayList<Integer> getRows(){
+		return rowsArrayList;
+	}
+	
 	public void print() {
 		System.out.println(" | " + bucketMark + " | " + rowsArrayList.toString() + " | ");
 	}
+	
 	
 }

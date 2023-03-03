@@ -2,67 +2,107 @@ package Client;
 
 import BGN.*;
 import it.unisa.dia.gas.jpbc.Element;
+
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.math.BigInteger;
 import test.Entry;
 import test.PostEntry;
 import util.Bucket;
 import util.Bucketize;
+
+import java.net.ServerSocket;
+import java.net.Socket;
+
+
 public class Client {
+	
+	private static int PORT = 8800;
+	private static String address = "127.0.0.1";
+	static final String QUIT = "quit";
+	static Socket socket = null;
+	static BufferedReader bufferedReader = null;
+	static BufferedReader consleReader = null;
+	static BufferedWriter bufferedWriter = null;
+	
+	static int num = 5;
+	
+	//map<String,String>combination;
 	
 	public static int str2int(String s) {
 		return Integer.valueOf(s).intValue();
 	}
+	
 	public static String int2str(int i) {
 		return String.valueOf(i);
 	}
+
+	
 	
 	public static void main(String[] args) throws Exception {
-		Entry e1 = new Entry(1000,"male","Henry","Sales");
-		Entry e2 = new Entry(5000,"fmale","Jessica","Sales");
-		Entry e3 = new Entry(1500,"fmale","Alice","Finance");
-		Entry e4 = new Entry(3000,"male","Bob","Sales");
-		Entry e5 = new Entry(2000,"male","Paul","Facility");
-		Entry[] T = new Entry[5];
-		T[0] = e1;
-		T[1] = e2;
-		T[2] = e3;
-		T[3] = e4;
-		T[4] = e5;
 		
-		BGN bgn = new BGN();
-		bgn.keyGeneration(512);
-		Publickey pubkey = bgn.getPubkey();
-		PrivateKey prikey = bgn.getPrikey();
-		Element c = null;
 		
-		PostEntry []postT = new PostEntry[T.length];
+		
 		Bucketize bt = new Bucketize(2);
-		
-		System.out.println("Building buckets...\n");
-		Bucket []resBuckets = bt.buildBuckets(T);
-		System.out.println(" | " + "bucket" + " | " + "rows" + " | ");
-		for(int i=0;i<resBuckets.length;i++) {
-			resBuckets[i].print();
+		System.out.println("\n compute shift function coefficient...\n");
+		BigInteger []coef = bt.shiftFunction(2);
+		System.out.println("coefficient are as followed:");
+		for(int i=0;i<coef.length;i++) {
+			System.out.print("a" + i + " = " + coef[i] + "; ");
 		}
+		System.out.print("\n");
 		
-		System.out.println("\n encoding table...\n");
-		postT = bt.encodeTable(T);
-		System.out.println(" | " + "id" + " | " + "salary" + " | " + "gender" + " | " + "name" + " | " + "dept" + " | ");
-		for(int i=0;i<postT.length;i++) {
-			postT[i].print();
-			c = BGN.encrypt(postT[i].getSalary(), pubkey);
-			postT[i].setSalary(c.hashCode());
-			c = BGN.encrypt(str2int(postT[i].getGender()), pubkey);
-			postT[i].setGender(int2str(c.hashCode()));
-			c = BGN.encrypt(str2int(postT[i].getDept()), pubkey);
-			postT[i].setDept(int2str(c.hashCode()));
-			c = BGN.encrypt(str2int(postT[i].getGdd()), pubkey);
-			postT[i].setGdd(c.hashCode());
-		}
-		System.out.println("\n after computing encrypted table...\n");
-		System.out.println(" | " + "id" + " | " + "salary" + " | " + "gender" + " | " + "name" + " | " + "dept" + " | ");
-		for(int i=0;i<postT.length;i++) {
-			postT[i].print();
+		//socket
+		
+		try {
+			socket = new Socket(address,PORT);
+			InputStream is = socket.getInputStream();
+			OutputStream os = socket.getOutputStream();
+			
+			bufferedWriter =new BufferedWriter(new OutputStreamWriter(os));
+			bufferedReader =new BufferedReader(new InputStreamReader(is));
+			consleReader = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("Client --> Server: transfer the coefficients...");
+			while(true) {	
+				for(int i=0;i<coef.length;i++) {
+					bufferedWriter.write(String.valueOf(coef[i])+"\n");
+					bufferedWriter.flush();
+				}
+				String input = consleReader.readLine();
+				bufferedWriter.write(input +"\n");
+				try {
+					bufferedWriter.flush();
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
+				if(QUIT.equalsIgnoreCase(input)) {
+					break;
+				}
+			}
+	
+			
+		} catch (IOException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			try {
+				
+				bufferedWriter.close();
+				bufferedReader.close();
+				socket.close();
+				consleReader.close();
+			} catch (IOException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
 		}
 		
 		
