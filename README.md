@@ -6,12 +6,12 @@
 
 ----------
 
-## Log
+;## Log
 
-- 2022/10/19: BGN SHE scheme tests successfully.
-- 2022/11/16: Simulation: Encoding and then encrypting the bucketized table.
-- 2022/11/17: Build buckets with row index.
-- 2022/12/03: Accomplish a Solver of Linear System-of-equations with big integer based on Gaussian elimination. 
+;- 2022/10/19: BGN SHE scheme tests successfully.
+;- 2022/11/16: Simulation: Encoding and then encrypting the bucketized table.
+;- 2022/11/17: Build buckets with row index.
+;- 2022/12/03: Accomplish a Solver of Linear System-of-equations with big integer based on Gaussian elimination. 
 
 ## Getting Started
 
